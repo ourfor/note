@@ -1,0 +1,2 @@
+现在很多视频网站的视频中采用的都是Blob而不是直链的形式，弄懂Blob是如何生成的，才知道如何下载视频
+根据StackOverflow上面的[回答](https://stackoverflow.com/questions/30864573/what-is-a-blob-url-and-why-it-is-used), blob url是有浏览器产生的，是没有办法直接访问这个链接的，相信大家或多或少都有遇到这样的情况。这个链接是通过URL的createObjectURL方法生成的，并且可以通过revokeObjectURL方法释放。这些链接只能被当做浏览器在相同的会话中当做本地单例使用

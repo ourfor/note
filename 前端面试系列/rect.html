@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>正方形</title>
+	<style>
+		.rect {
+			width: fit-content;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			border: 1px solid black;
+		}
+		.rect::after {
+			display: block;
+			content: '';
+			padding-bottom: 100%;
+		}
+	</style>
+</head>
+<body>
+	<div class="rect">
+		这是正方形,哈哈
+	</div>
+</body>
+</html>
