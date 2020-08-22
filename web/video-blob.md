@@ -119,7 +119,31 @@ out.ts
 https://demo.ourfor.top/movies/enc-key
 enc-key
 ```
-3. 开始加密: `ffmpeg -i sample.mp4 -hls_time 20 -hls_key_info_file enc-info -hls_flags single_file out.m3u8`
+或者通过命令:
+```bash
+BASE_URL="path"
+openssl rand 16 > file.key
+echo $BASE_URL/file.key > file.keyinfo
+echo file.key >> file.keyinfo
+echo $(openssl rand -hex 16) >> file.keyinfo
+```
+3. 开始加密:
+```bash
+ffmpeg -y -i sample.mp4 -hls_time 12 -hls_key_info_file enc-info -hls_playlist_type vod -hls_segment_filename "file-%5d.ts" out.m3u8 # 多文件切片加密
+```
+ffmpeg生成单文件加密有bug，使用mp42hsl, 相关命令:
+```bash
+openssl rand 16 > enc.key
+mp42hls --encryption-key $(xxd -ps enc.key) \
+    --encryption-key-uri https://demo.ourfor.top/Movies/test/enc.key sample.mp4 # 多文件
+mp42hls --encryption-key $(xxd -ps enc.key) \
+  --encryption-key-uri enc.key --encryption-iv-mode sequence \
+  --iframe-index-filename output-iframs.m3u8 \
+  --segment-filename-template output.ts \
+  --segment-url-template output.ts \
+  --index-filename output.m3u8 \
+  --output-single-file sample.mp4
+```
 
 ## 视频缩略图
 
